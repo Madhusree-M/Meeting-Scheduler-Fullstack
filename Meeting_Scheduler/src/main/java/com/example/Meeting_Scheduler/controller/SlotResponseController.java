@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +51,15 @@ public class SlotResponseController {
         responseService.createResponse(response);
 
         return "redirect:/responses/list";
+    }
+
+    // Edit response form
+    @GetMapping("/edit/{id}")
+    public String editResponseForm(@PathVariable Long id, Model model) {
+        SlotResponse response = responseService.getResponseById(id)
+                .orElseThrow(() -> new RuntimeException("Response not found with Id : " + id));
+        model.addAttribute("response", response);
+        model.addAttribute("slot", slotService.getAllMeetingSlots());
+        return "responses/form";
     }
 }
