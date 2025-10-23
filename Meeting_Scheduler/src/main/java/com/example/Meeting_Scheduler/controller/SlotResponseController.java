@@ -20,10 +20,10 @@ import com.example.Meeting_Scheduler.service.SlotResponseService;
 public class SlotResponseController {
 
     @Autowired
-    SlotResponseService responseService;
+    private SlotResponseService responseService;
 
     @Autowired
-    MeetingSlotService slotService;
+    private MeetingSlotService slotService;
 
     // Display all Responses
     @GetMapping("/list")
@@ -35,15 +35,20 @@ public class SlotResponseController {
     // Form for new response
     @GetMapping("/form")
     public String showResponseForm(Model model) {
-        model.addAttribute("responses", new SlotResponse());
+        model.addAttribute("response", new SlotResponse());
         model.addAttribute("slots", slotService.getAllMeetingSlots());
         return "/responses/form";
     }
 
     // Save response to db
     @PostMapping
-    public String createResponse(@ModelAttribute ("responses")SlotResponse response , @RequestParam("slotId") Long slotId)
-    {
-        MeetingSlot slot = slotService
+    public String createResponse(@ModelAttribute("response") SlotResponse response,
+            @RequestParam("slotId") Long slotId) {
+        MeetingSlot slot = slotService.getSlotById(slotId)
+                .orElseThrow(() -> new RuntimeException("Slot not found with Id : " + slotId));
+        response.setSlot(slot);
+        responseService.createResponse(response);
+
+        return "redirect:/responses/list";
     }
 }
