@@ -2,6 +2,8 @@ package com.example.Meeting_Scheduler.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,10 +23,12 @@ public class SlotResponse {
 
     @ManyToOne
     @JoinColumn(name = "slot_id")
+    @JsonIgnoreProperties({ "slotResponses", "meeting" })
     private MeetingSlot slot;
 
     @ManyToOne
     @JoinColumn(name = "participant_id")
+    @JsonIgnoreProperties({ "meeting" })
     private User participant;
 
     @Enumerated(EnumType.STRING)

@@ -32,7 +32,7 @@ public class MeetingSlot {
     private LocalDateTime endTime;
 
     @OneToMany(mappedBy = "slot", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("slot")
+    @JsonIgnoreProperties({ "slot", "participant" })
     private List<SlotResponse> slotResponses;
 
 }
