@@ -3,6 +3,7 @@ package com.example.Meeting_Scheduler.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -24,7 +25,7 @@ public class MeetingSlot {
 
     @ManyToOne
     @JoinColumn(name = "meeting_id")
-    @JsonIgnoreProperties("meetingSlots") // ignore back-reference in Meeting
+    @JsonBackReference // ignore back-reference in Meeting
     private Meeting meeting;
 
     private LocalDateTime startTime;
