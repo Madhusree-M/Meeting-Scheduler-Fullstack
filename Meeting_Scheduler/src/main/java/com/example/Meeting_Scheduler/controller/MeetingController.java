@@ -74,7 +74,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Meeting_Scheduler.entity.Meeting;
+import com.example.Meeting_Scheduler.entity.User;
 import com.example.Meeting_Scheduler.service.MeetingService;
+import com.example.Meeting_Scheduler.service.UserService;
 
 @RestController
 @RequestMapping("/api/meetings")
@@ -82,6 +84,9 @@ public class MeetingController {
 
     @Autowired
     private MeetingService meetingService;
+
+    @Autowired
+    private UserService userService;
 
     // Display all meetings
     @GetMapping
@@ -107,6 +112,14 @@ public class MeetingController {
 
         Meeting meeting = meetingService.getMeetingById(id)
                 .orElseThrow(() -> new RuntimeException("Meeting not found with Id : " + id));
+
+        // Base Condition
+        if (meetingDetails.getCreator() != null && meetingDetails.getCreator().getUserId() != null) {
+            User creator = userService.getUserById(meetingDetails.getCreator().getUserId())
+                    .orElseThrow(() -> new RuntimeException(
+                            "User not found with Id : " + meetingDetails.getCreator().getUserId()));
+            meeting.setCreator(creator);
+        }
         meeting.setTitle(meetingDetails.getTitle());
         meeting.setMeetingSlots(meetingDetails.getMeetingSlots());
         meeting.setFinalizedSlot(meetingDetails.getFinalizedSlot());
