@@ -3,7 +3,7 @@ package com.example.Meeting_Scheduler.entity;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +29,6 @@ public class User {
     private LocalDateTime joinDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "creator")
-    @JsonIgnoreProperties("{meetings}")
+    @JsonManagedReference
     private List<Meeting> meetings;
 }

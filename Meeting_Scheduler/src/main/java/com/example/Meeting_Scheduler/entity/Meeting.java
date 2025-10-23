@@ -3,6 +3,7 @@ package com.example.Meeting_Scheduler.entity;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -24,6 +25,7 @@ public class Meeting {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
+    @JsonIgnoreProperties("meetings")
     private User creator;
 
     private String title;
