@@ -103,6 +103,14 @@ public class MeetingController {
     // Create new meeting
     @PostMapping
     public Meeting createMeeting(@RequestBody Meeting meeting) {
+
+        // base condition : checking for user existence
+        if (meeting.getCreator() != null && meeting.getCreator().getUserId() != null) {
+            User creator = userService.getUserById(meeting.getCreator().getUserId())
+                    .orElseThrow(
+                            () -> new RuntimeException("User not found with ID: " + meeting.getCreator().getUserId()));
+            meeting.setCreator(creator);
+        }
         return meetingService.createMeeting(meeting);
     }
 
