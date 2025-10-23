@@ -28,7 +28,7 @@ public class SlotResponse {
 
     @ManyToOne
     @JoinColumn(name = "participant_id")
-    @JsonIgnoreProperties({ "meeting" })
+    @JsonIgnoreProperties({ "meetings" })
     private User participant;
 
     @Enumerated(EnumType.STRING)
