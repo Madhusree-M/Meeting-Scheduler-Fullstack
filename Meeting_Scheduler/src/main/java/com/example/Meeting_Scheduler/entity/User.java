@@ -29,6 +29,6 @@ public class User {
     private LocalDateTime joinDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "creator")
-    @JsonIgnoreProperties("{meeting}")
+    @JsonIgnoreProperties("{meetings}")
     private List<Meeting> meetings;
 }
