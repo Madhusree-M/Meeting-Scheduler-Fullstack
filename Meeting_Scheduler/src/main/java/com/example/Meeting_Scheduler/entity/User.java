@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+// import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -31,4 +32,16 @@ public class User {
     @OneToMany(mappedBy = "creator")
     @JsonManagedReference
     private List<Meeting> meetings;
+
+    // @Transient // This tells Hibernate: "Don't store this in the database"
+    // private String joinDateString;
+
+    // public String getJoinDateString() {
+    // return joinDateString;
+    // }
+
+    // public void setJoinDateString(String joinDateString) {
+    // this.joinDateString = joinDateString;
+    // }
+
 }

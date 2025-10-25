@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Users</title>
+</head>
+<body>
+    <h2>Users</h2>
+
+    <a th:href="@{/users/form}">Add New User</a>
+    <br/><br/>
+
+    
+    <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Join Date</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.userId}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.contact}"></td>
+                <td th:text="${#temporals.format(user.joinDate, 'dd-MM-yyyy HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/users/edit/{id}(id=${user.userId})}">Edit</a> |
+                    <a th:href="@{/users/delete/{id}(id=${user.userId})}" 
+                       onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                </td>
+            </tr>
+    </table>
+</body>
+</html>
